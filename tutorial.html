@@ -1,15 +1,12 @@
 <HTML>
 <HEAD>
-<!-- This HTML file has been created by texi2html 1.51
-     from tutorial.texinfo on 21 August 1998 -->
-
 <TITLE>Xlogmaster</TITLE>
 </HEAD>
 <BODY>
-<H1>The Xlogmaster Tutorial</H1>
-<H2>Edition 0.5, for the Xlogmaster 1.4.2</H2>
+<H1>Xlogmaster Tutorial</H1>
+<H2>Edition 0.5, for Xlogmaster 1.4.2</H2>
 <H2>August 1998</H2>
-<ADDRESS>by Georg C. F. Greve</ADDRESS>
+<ADDRESS>Original work by Georg C. F. Greve</ADDRESS>
 <P>
 <P><HR><P>
 
@@ -42,13 +39,13 @@ translation approved by Georg C. F. Greve.
 <H1><A NAME="SEC1" HREF="tutorial_toc.html#TOC1">Copying</A></H1>
 <P>
 <A NAME="IDX1"></A>
-The Xlogmaster is a GTK+ based program to monitor 
+Xlogmaster is a GTK+ based program to monitor 
 system activity (logfiles) &#38; hardware status (devices)
 and take actions if neccessary.
 <P>
 Copyright (C) 1998 Georg C. F. Greve
 <P>
-<B>The Xlogmaster is a GNU program.</B>
+<B>Xlogmaster is a GNU program.</B>
 <P>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -69,7 +66,7 @@ Inc.,  Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 
-<H1><A NAME="SEC2" HREF="tutorial_toc.html#TOC2">Introduction into the Xlogmaster</A></H1>
+<H1><A NAME="SEC2" HREF="tutorial_toc.html#TOC2">Introduction to Xlogmaster</A></H1>
 <P>
 <A NAME="IDX2"></A>
 
@@ -88,27 +85,27 @@ MIDDLE MOUSE BUTTON IN TEXT WINDOW HIDES/SHOWS BUTTONS
 <P>
 
 <P>
-The first version of the Xlogmaster has been written in 1996, using the
-XVIEW toolkit. I didn't like that toolkit too much so it all ended up in
+The first version of Xlogmaster was written in 1996, using the XVIEW toolkit. 
+Georg didn't like that toolkit too much so it all ended up in
 a pretty messy piece of code that was only compile-time configurable and
-not very stable -- I did use it for two years, though, always telling
-myself "I'll be writing a clean version soon".
+not very stable -- Georg did use it for two years, though, always telling
+himself "I'll be writing a clean version soon".
 <P>
-June 1998 I finally managed to actually keep this promise and completely
+June 1998 Georg finally managed to actually keep this promise and completely
 rewrote the Xlogmaster for the GTK+ toolkit (see 
-<TT>`http://www.gtk.org/'</TT>). First I only intended to write it for
-my private usage but when I got a lot of feedback from
-people around the world I decided to make the Xlogmaster a real and
-regular project. With version 1.4.0 the Xlogmaster then became an
+<TT>`http://www.gtk.org/'</TT>). First Georg only intended to write it for
+his private usage but when he recieved a lot of feedback from
+people around the world he decided to make the Xlogmaster a real and
+regular project. With version 1.4.0 Xlogmaster then became an
 official GNU program.
 <P>
-The Xlogmaster will allow you to monitor all your logfiles and all
+Xlogmaster will allow you to monitor all your logfiles and all
 devices that allow being read by <CODE>cat</CODE>. Furthermore it supplies
 several filters that will do things from raising/hiding lines in the
 text display to starting programs to send you a paging message about a
 possible security breach.
 <P>
-If used wisely the Xlogmaster can make it very easy to keep track of
+If used wisely Xlogmaster can make it very easy to keep track of
 everything that happens on your system and it can increase your systems
 security by quite a lot. This program has been written and published in
 the hope that it will prove useful to you but I do 
@@ -118,13 +115,13 @@ the hope that it will prove useful to you but I do
 
 
 
-<H1><A NAME="SEC3" HREF="tutorial_toc.html#TOC3">How to use the Xlogmaster</A></H1>
+<H1><A NAME="SEC3" HREF="tutorial_toc.html#TOC3">How to use Xlogmaster</A></H1>
 <P>
 <A NAME="IDX3"></A>
 
 </P>
 <P>
-The Xlogmaster runtime usage is basically pretty simple. There is a
+Xlogmaster runtime usage is basically pretty simple. There is a
 button on the side for each entry and as you might have guessed clicking
 on the button will make the Xlogmaster display that entry.
 <P>
@@ -132,9 +129,7 @@ There are more functions that are less obvious:
 
 </P>
 
-<PRE>
-
-<CODE>right mouse button</CODE> will bring up the menu.
+<PRE><CODE>right mouse button</CODE> will bring up the menu.
 
 <CODE>middle mouse button</CODE> will toggle whether the buttons are being
 shown/hidden.
@@ -157,7 +152,7 @@ pointer over an object a small help window will pop up.
 
 
 
-<H1><A NAME="SEC4" HREF="tutorial_toc.html#TOC4">Internal workings of the Xlogmaster</A></H1>
+<H1><A NAME="SEC4" HREF="tutorial_toc.html#TOC4">Internal workings of Xlogmaster</A></H1>
 <P>
 <A NAME="IDX4"></A>
 
@@ -170,7 +165,7 @@ pointer over an object a small help window will pop up.
 
 </P>
 <P>
-The Xlogmaster knows basically two modes of operation, the 
+Xlogmaster knows basically two modes of operation, the 
 <EM>tail mode</EM> and the <EM>cat mode</EM>. Both modes are named after the
 programs they emulate.
 
@@ -178,7 +173,7 @@ programs they emulate.
 <P>
 For both modes you can give an interval -- this is the time (in 1/10
 seconds) between two calls of the interrupt function. This interval
-directly  determines how often the Xlogmaster checks for changes in the
+directly  determines how often Xlogmaster checks for changes in the
 logfile (<EM>tail mode</EM>) or how often it replaces the data in the
 buffer with the current data (<EM>cat mode</EM>).
 
@@ -191,7 +186,7 @@ buffer with the current data (<EM>cat mode</EM>).
 <A NAME="IDX6"></A>
 The <EM>tail</EM> mode basically works like using <CODE>tail -f</CODE> on a
 logfile. It will read a file and then keep on reading whatever gets
-appended to it over time. The Xlogmaster should also be able to catch
+appended to it over time. Xlogmaster should also be able to catch
 logfile rotations so you don't have to reopen it every time the logfiles
 have been rotated.
 
@@ -203,7 +198,7 @@ have been rotated.
 <P>
 <A NAME="IDX7"></A>
 The <EM>cat</EM> mode works like doing a <CODE>cat &#60;filename&#62;</CODE> so it reads
-the whole file every time. This is neccessary for reading things like
+the whole file every time. This is necessary for reading things like
 the <TT>`/proc'</TT> devices.
 
 </P>
@@ -216,7 +211,7 @@ the <TT>`/proc'</TT> devices.
 
 </P>
 <P>
-The Xlogmaster has two classes of filters, enumerated <EM>Class 0</EM> and
+Xlogmaster has two classes of filters, enumerated <EM>Class 0</EM> and
 <EM>Class 1</EM> filters. The main difference is that the <EM>Class 0</EM>
 filters are filters being applied at <EM>display time</EM> while the
 <EM>Class 1</EM> filters are being applied at <EM>read-time</EM>.<BR>
@@ -367,7 +362,7 @@ especially means that piping will <EM>not</EM> work.
 </P>
 <P>
 This filter has been implemented for events that are of extreme
-importantce regardless of when they have been triggered. A notice box
+importance regardless of when they have been triggered. A notice box
 is being popped up at the current mouse position. This notice box
 contains a list with the time and date of the triggering action as well
 as the name of the entry that triggered it. If you click on an entry in
@@ -386,8 +381,8 @@ added.
 
 </P>
 <P>
-For people who like to keep the Xlogmaster iconifed because of space
-shortage. If you set this filter the Xlogmaster will uniconify automatically
+For people who like to keep Xlogmaster iconifed because of space
+shortage. If you set this filter Xlogmaster will uniconify automatically
 when a matching line has been seen.
 
 </P>
@@ -410,7 +405,7 @@ they should be about 8KHz and in a standard format (<SAMP>`Wave'</SAMP>,
 <SAMP>`ULaw'</SAMP> or <SAMP>`SUN audio'</SAMP> for instance).
 <BR>
 Please check out the commandline options for setting of the
-soundfiles. If nothing is given the Xlogmaster will use the files in
+soundfiles. If nothing is given Xlogmaster will use the files in
 <TT>`$prefix/etc/sound'</TT>. The standard is to play back the files
 called <TT>`notice'</TT>, <TT>`alert'</TT> or <TT>`uniconify'</TT> -- I'd recommend
 to make then symbolic links instead of actually copying the files there.
@@ -432,19 +427,18 @@ to make then symbolic links instead of actually copying the files there.
 
 </P>
 <P>
-There are two different filetypes used for configuration by the
-Xlogmaster. 
+There are two different filetypes used for configuration by Xlogmaster. 
 One is the GTK+ special style file, the <STRONG>gtkrc</STRONG> file I do not want
 to say too much about that one because it is documented with the GTK+
 toolkit 
 (See Info file `GTK', node `Resource Files')
 and it's format is actually pretty simple. A look at
-the sample files distributed along with the Xlogmaster should already
+the sample files distributed along with Xlogmaster should already
 solve all questions, so feel free to check them out and try around with
-them. They allow you to control the look of the Xlogmaster any way you
+them. They allow you to control the look of Xlogmaster any way you
 want and it's definitely worth risking a look.
 <P>
-The Xlogmaster internal configuration file is pure ASCII and can hence
+Xlogmaster internal configuration file is pure ASCII and can hence
 be processed easily with any text editor although you will most probably
 not need to do so because the customization menu is much nicer.
 <P>
@@ -550,8 +544,7 @@ Here are some lines to give you an example of how a proper xlogmasterrc
 file looks.
 <P>
 
-<PRE>
-TAIL{/var/log/messages,3,System Messages,/var/log/messages}
+<PRE>TAIL{/var/log/messages,3,System Messages,/var/log/messages}
 RAISE{greve}
 HIDE{accesswatch}
 HIDE{faxqclean}
@@ -598,8 +591,8 @@ EXECUTE,CASE_SENSITIVE{uucpcontrol}{xlm-mail greve}
 </DIR>
 <H2>i</H2>
 <DIR>
-<LI><A HREF="tutorial.html#IDX4">Internal workings of the Xlogmaster</A>
-<LI><A HREF="tutorial.html#IDX2">Introduction into the Xlogmaster</A>
+<LI><A HREF="tutorial.html#IDX4">Internal workings of Xlogmaster</A>
+<LI><A HREF="tutorial.html#IDX2">Introduction into Xlogmaster</A>
 </DIR>
 <H2>l</H2>
 <DIR>
@@ -631,12 +624,21 @@ EXECUTE,CASE_SENSITIVE{uucpcontrol}{xlm-mail greve}
 </DIR>
 <H2>y</H2>
 <DIR>
-<LI><A HREF="tutorial.html#IDX1">Your rights and freedoms.</A>
-</DIR>
+<LI><A HREF="tutorial.html#IDX1">Your rights and freedoms.</A></DIR>
+ </P>
      
-<P><HR><P>
-This document was generated on 21 August 1998 using the
-<A HREF="http://wwwcn.cern.ch/dci/texi2html/">texi2html</A>
-translator version 1.51.</P>
+<HR>
+<p>Please send comments on these web pages to <a href="mailto:jsg@metrocast.net">
+<em>jsg@metrocast.net</em></a>, send other questions to
+<a href="mailto:gnu@gnu.org"><em>gnu@gnu.org</em></a>. </p>
+<p>Copyright (C) 1998,1999 Georg C. F. Greve, 2004 John S. Gaythorpe - 
+Xlogmaster is a GNU program </p>
+<p>Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 
+02111, USA </p>
+<p>Verbatim copying and distribution of this entire article is permitted in any 
+medium, provided this notice is preserved. </p>
+<p>Updated: <!-- hhmts start -->Last modified: Thu Mar 4 2004 
+<!-- hhmts end --></p>
+     
 </BODY>
 </HTML>
