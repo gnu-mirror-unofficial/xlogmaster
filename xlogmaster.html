@@ -5,7 +5,7 @@
 <HTML>
 <HEAD>
 <TITLE>The Xlogmaster - GNU Project - Free Software Foundation (FSF) </TITLE>
-<!-- Changed by: Georg C. F. Greve, 16-Mar-1999 -->
+<!-- Changed by: Georg C. F. Greve, 27-Mar-1999 -->
 <LINK REV="made" HREF="mailto:greve@gnu.org">
 </HEAD>
 <BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#1F00FF" ALINK="#FF0000" VLINK="#9900DD">
@@ -20,7 +20,7 @@
 <P>
 
 <H1><A NAME="TOC">The Xlogmaster</A></H1>
-<H3>current version: 1.4.4</H3>
+<H3>current version: 1.4.4, page being reconstructed for upcoming 1.6.x release</H3>
 
 <OL>
 <LI><A NAME="TOCWhatis" HREF="#Whatis">What is the Xlogmaster ?</A>
@@ -39,8 +39,7 @@
 <LI><A NAME="TOCAdditional" HREF="#Additional">Further Information & Links:</A></LI>
 <UL>
 <LI><A NAME="TOCScreenshots" HREF="#Screenshots">What does the Xlogmaster look like ? (screenshots)</A></LI>
-<LI><A NAME="TOCNewFeatures" HREF="#NewFeatures">What will the future bring ?</A>
-What will the future bring ?</LI>
+<LI><A NAME="TOCNewFeatures" HREF="#NewFeatures">What will the future bring ?</A></LI>
 </UL>
 
 </OL>
@@ -148,8 +147,22 @@ supplies some variables (name of entry, helptext for entry, line that triggered 
 
 
 <H2><A NAME="New" HREF="#TOCNew">What's new in the current release ?</A></H2>
+Since there are a lot of changes usually only the most important ones are being
+listed here.<P>
+<STRONG>Stable tree 1.6.x:</STRONG>
+<UL>
+<LI> New mode: RUN </LI>
+<LI> Plugin support </LI>
+<LI> GTK+ 1.2.x compliant </LI>
+<LI> Complete "Customize" menu rewrite </LI>
+<LI> Execution now allows pipes </LI>
+<LI> Keyboard accelerators </LI>
+<LI> support for a system wide entry database </LI>
+<LI> support for personal entry database </LI>
+<LI> the Xlogmaster now catches logfile rotation </LI>
 
-There have been a lot of changes - only the really important ones are listed here:<P>
+</UL>
+<STRONG>Stable tree 1.4.x:</STRONG>
 <UL>
 <LI> most important: <B> The Xlogmaster is now a GNU program </B> (surprise, surprise) </LI>
 <LI> introduction of background monitoring / Class1 filters (see above)</LI>
@@ -175,24 +188,28 @@ There have been a lot of changes - only the really important ones are listed her
 <H2><A NAME="Platforms" HREF="#TOCPlatforms">Supported Platforms</A></H2>
 
 First of all: You will <EM>definitely</EM> need the 
-<A HREF="http://www.gtk.org/">GTK+</A> toolkit if you didn't install it already. 
+<A HREF="http://www.gtk.org/">GTK+</A> toolkit version 1.2.x if you didn't install 
+it already. 
 Apart from that there is no reason why it shouldn't work on all UN*X systems. Until
 now I did not receive any mail telling me that the Xlogmaster did not install fine.
 <P>
 The following list shows all systems I have positive knowledge about from users
-who told me they got the Xlogmaster running without major problems. If your system 
+who told me they got the Xlogmaster running without major problems. If your system  
 is not on the  list and you are successful with the installation I'd like you 
 to send a short mail to  <A HREF="mailto:xlogmaster-bugs@gnu.org">
 <EM>xlogmaster-bugs@gnu.org</EM></A>
  so I can include your system in this list. <UL>
+<LI> AIX 4.1.5 </LI>
 <LI> Digital UNIX 3.2c </LI>
 <LI> FreeBSD </LI>
 <LI> GNU/Linux </LI>
 <LI> HP-UX </LI>
 <LI> Irix5.3 (MIPS R4000) </LI>
+<LI> Irix 6.2 (MIPS R5000) </LI>
 <LI> Solaris </LI>
 <LI> SunOS 4.1.1 </LI>
 <LI> x86 BSDI 3.0 </LI>
+<LI> ... ? </LI>
 </UL>
 
 <H3><A NAME="Ports" HREF="#TOCPorts">Existing Ports</A></H3>
@@ -204,7 +221,26 @@ for your system without you having to worry about it. Ports exist for the follow
 
 
 <LI> <A HREF="http://www.freebsd.org/ports/index.html">FreeBSD</A> </LI>
-<LI> <A HREF="http://www.debian.org/Packages/unstable/admin/xlogmaster.html">Debian GNU/Linux ( packages for i386, alpha, m86k and powerpc )</A> </LI>
+<LI> <A HREF="http://www.debian.org/">Debian GNU/Linux</A> - packages for:
+<A HREF="http://www.debian.org/Packages/stable/admin/xlogmaster.html">
+i386</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/stable/main/binary-alpha/admin/">
+alpha</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/stable/main/binary-m68k/admin/">
+m68k</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/stable/main/binary-sparc/admin/">
+sparc</A>. There are "unstable" versions accessible, as well: 
+<A HREF="http://www.debian.org/Packages/unstable/admin/xlogmaster.html">
+i386</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/unstable/main/binary-alpha/admin/">
+alpha</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/unstable/main/binary-m68k/admin/">
+m68k</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/sid/main/binary-powerpc/admin/">
+powerpc</A>, 
+<A HREF="ftp://ftp.debian.org/debian/dists/unstable/main/binary-sparc/admin/">
+sparc</A>
+</LI>
 
 </UL>
 
@@ -346,7 +382,7 @@ permitted in any medium, provided this notice is preserved.
 <P>
 Updated:
 <!-- hhmts start -->
-15 Mar 1999 greve
+27 Mar 1999 greve
 <!-- hhmts end -->
 <HR>
 </BODY>
