@@ -1,0 +1,642 @@
+<HTML>
+<HEAD>
+<!-- This HTML file has been created by texi2html 1.51
+     from tutorial.texinfo on 21 August 1998 -->
+
+<TITLE>Xlogmaster</TITLE>
+</HEAD>
+<BODY>
+<H1>The Xlogmaster Tutorial</H1>
+<H2>Edition 0.5, for the Xlogmaster 1.4.2</H2>
+<H2>August 1998</H2>
+<ADDRESS>by Georg C. F. Greve</ADDRESS>
+<P>
+<P><HR><P>
+
+<P>
+Copyright (C) 1998 Georg C. F. Greve
+<P>
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+<P>
+Permission is granted to copy and distribute modified
+versions of this manual under the conditions for
+verbatim copying, provided also that the sections
+entitled "Copying" and "GNU General Public License"
+are included exactly as in the original, and provided
+that the entire resulting derived work is distributed
+under the terms of a permission notice identical to this
+one.
+<P>
+Permission is granted to copy and distribute
+translations of this manual into another language,
+under the above conditions for modified versions,
+except that this permission notice may be stated in a
+translation approved by Georg C. F. Greve.
+
+</P>
+
+
+
+<H1><A NAME="SEC1" HREF="tutorial_toc.html#TOC1">Copying</A></H1>
+<P>
+<A NAME="IDX1"></A>
+The Xlogmaster is a GTK+ based program to monitor 
+system activity (logfiles) &#38; hardware status (devices)
+and take actions if neccessary.
+<P>
+Copyright (C) 1998 Georg C. F. Greve
+<P>
+<B>The Xlogmaster is a GNU program.</B>
+<P>
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+<P>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+<P>
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc.,  Temple Place, Suite 330, Boston, MA  02111-1307  USA
+<P>
+
+</P>
+
+
+
+<H1><A NAME="SEC2" HREF="tutorial_toc.html#TOC2">Introduction into the Xlogmaster</A></H1>
+<P>
+<A NAME="IDX2"></A>
+
+</P>
+<P>
+Hint for people that are too impatient to read the full documentation
+(as I usually am):
+
+</P>
+<P>
+RIGHT MOUSE BUTTON IN TEXT WINDOW BRINGS UP MENU
+<P>
+MIDDLE MOUSE BUTTON IN TEXT WINDOW HIDES/SHOWS BUTTONS
+
+</P>
+<P>
+
+<P>
+The first version of the Xlogmaster has been written in 1996, using the
+XVIEW toolkit. I didn't like that toolkit too much so it all ended up in
+a pretty messy piece of code that was only compile-time configurable and
+not very stable -- I did use it for two years, though, always telling
+myself "I'll be writing a clean version soon".
+<P>
+June 1998 I finally managed to actually keep this promise and completely
+rewrote the Xlogmaster for the GTK+ toolkit (see 
+<TT>`http://www.gtk.org/'</TT>). First I only intended to write it for
+my private usage but when I got a lot of feedback from
+people around the world I decided to make the Xlogmaster a real and
+regular project. With version 1.4.0 the Xlogmaster then became an
+official GNU program.
+<P>
+The Xlogmaster will allow you to monitor all your logfiles and all
+devices that allow being read by <CODE>cat</CODE>. Furthermore it supplies
+several filters that will do things from raising/hiding lines in the
+text display to starting programs to send you a paging message about a
+possible security breach.
+<P>
+If used wisely the Xlogmaster can make it very easy to keep track of
+everything that happens on your system and it can increase your systems
+security by quite a lot. This program has been written and published in
+the hope that it will prove useful to you but I do 
+<EM> not guarantee for anything</EM> but my best will.
+
+</P>
+
+
+
+<H1><A NAME="SEC3" HREF="tutorial_toc.html#TOC3">How to use the Xlogmaster</A></H1>
+<P>
+<A NAME="IDX3"></A>
+
+</P>
+<P>
+The Xlogmaster runtime usage is basically pretty simple. There is a
+button on the side for each entry and as you might have guessed clicking
+on the button will make the Xlogmaster display that entry.
+<P>
+There are more functions that are less obvious:
+
+</P>
+
+<PRE>
+
+<CODE>right mouse button</CODE> will bring up the menu.
+
+<CODE>middle mouse button</CODE> will toggle whether the buttons are being
+shown/hidden.
+
+<CODE>left mouse button</CODE> will pick the standard selection (for
+cut&#38;paste).
+
+</PRE>
+
+<P>
+these do only work in the <EM>text window</EM>, though.
+<P>
+Apart from that you can use the cursor-keys to move the standard
+selection around and activate it by hitting <KBD>RET</KBD>.
+<P>
+The configuration should be self explanatory, if you keep the mouse
+pointer over an object a small help window will pop up.
+
+</P>
+
+
+
+<H1><A NAME="SEC4" HREF="tutorial_toc.html#TOC4">Internal workings of the Xlogmaster</A></H1>
+<P>
+<A NAME="IDX4"></A>
+
+</P>
+
+
+<H2><A NAME="SEC5" HREF="tutorial_toc.html#TOC5">Modes</A></H2>
+<P>
+<A NAME="IDX5"></A>
+
+</P>
+<P>
+The Xlogmaster knows basically two modes of operation, the 
+<EM>tail mode</EM> and the <EM>cat mode</EM>. Both modes are named after the
+programs they emulate.
+
+</P>
+<P>
+For both modes you can give an interval -- this is the time (in 1/10
+seconds) between two calls of the interrupt function. This interval
+directly  determines how often the Xlogmaster checks for changes in the
+logfile (<EM>tail mode</EM>) or how often it replaces the data in the
+buffer with the current data (<EM>cat mode</EM>).
+
+</P>
+
+
+
+<H3><A NAME="SEC6" HREF="tutorial_toc.html#TOC6">Tail mode</A></H3>
+<P>
+<A NAME="IDX6"></A>
+The <EM>tail</EM> mode basically works like using <CODE>tail -f</CODE> on a
+logfile. It will read a file and then keep on reading whatever gets
+appended to it over time. The Xlogmaster should also be able to catch
+logfile rotations so you don't have to reopen it every time the logfiles
+have been rotated.
+
+</P>
+
+
+
+<H3><A NAME="SEC7" HREF="tutorial_toc.html#TOC7">Cat mode</A></H3>
+<P>
+<A NAME="IDX7"></A>
+The <EM>cat</EM> mode works like doing a <CODE>cat &#60;filename&#62;</CODE> so it reads
+the whole file every time. This is neccessary for reading things like
+the <TT>`/proc'</TT> devices.
+
+</P>
+
+
+
+<H2><A NAME="SEC8" HREF="tutorial_toc.html#TOC8">Filters</A></H2>
+<P>
+<A NAME="IDX8"></A>
+
+</P>
+<P>
+The Xlogmaster has two classes of filters, enumerated <EM>Class 0</EM> and
+<EM>Class 1</EM> filters. The main difference is that the <EM>Class 0</EM>
+filters are filters being applied at <EM>display time</EM> while the
+<EM>Class 1</EM> filters are being applied at <EM>read-time</EM>.<BR>
+Matching for the filters is <EM>always</EM> done per line -- patterns
+that would match more than one line will <EM>never</EM> match anything !
+<P>
+The following filters are known:
+
+</P>
+
+
+
+<H3><A NAME="SEC9" HREF="tutorial_toc.html#TOC9">Class 0 filters</A></H3>
+<P>
+<A NAME="IDX9"></A>
+As mentioned before <EM>Class 0</EM> filters are being applied at
+<EM>display-time</EM> -- if a line triggered multiple filters <B>only</B>
+the one with the highest priority is being applied ! 
+
+</P>
+<P>
+The filters are (from highest to lowest priority):
+
+</P>
+
+
+
+<H4><A NAME="SEC10" HREF="tutorial_toc.html#TOC10">Hide</A></H4>
+<P>
+<A NAME="IDX10"></A>
+Lines that trigger this action will be hidden without paying attention
+whether the line triggered other <EM>Class 0</EM> filters or not. Lines
+that do trigger any of these will be displayed the usual way.
+
+</P>
+
+
+<H4><A NAME="SEC11" HREF="tutorial_toc.html#TOC11">Raise</A></H4>
+<P>
+<A NAME="IDX11"></A>
+Lines that triggered this acton will be raised (highlighted) without
+paying attention whether they also triggered a <EM>Lower</EM> action.
+
+</P>
+
+
+
+<H4><A NAME="SEC12" HREF="tutorial_toc.html#TOC12">Lower</A></H4>
+<P>
+<A NAME="IDX12"></A>
+Lines that triggered this action will be lowered (lowlighted).
+
+</P>
+
+
+
+<H3><A NAME="SEC13" HREF="tutorial_toc.html#TOC13">Class 1 filters</A></H3>
+<P>
+<A NAME="IDX13"></A>
+<EM>Class 1</EM> filters are being applied at <EM>read-time</EM>  ---
+logfiles with <EM>Class 1</EM> filters are being watched in the
+background, the filters will do exactly the same thing regardless of
+whether you are just looking at that logfile or not.
+
+</P>
+<P>
+The <EM>Class 1</EM> filters will be triggered for each line they can be
+applied on, but each filter only once (even if the string would
+theoretically match multiple times). They do <STRONG>not</STRONG> exclude each
+other, though. Each filter that can be applied will be applied !
+
+</P>
+
+
+
+<H4><A NAME="SEC14" HREF="tutorial_toc.html#TOC14">Alert</A></H4>
+<P>
+<A NAME="IDX14"></A>
+The button of the entry that triggered the alert will flash in the
+<EM>alert color</EM> and then slowly fades back
+to it's normal color. The <EM>alert color</EM>, the time it takes to fade
+back and the smoothness of the fading can be controlled at
+<EM>configure-time</EM> as well as <EM>runtime</EM>.
+
+</P>
+<P>
+The purpose of this filter is to inform you of events that are of
+interest right now but become less important over time -- the fading
+back prevents a situation that you come back to your machine and find
+all the buttons in <EM>alert color</EM> additionally you get an impression
+of how recent the alert was if you catch it while fading back.
+
+</P>
+
+
+<H4><A NAME="SEC15" HREF="tutorial_toc.html#TOC15">Execute</A></H4>
+<P>
+<A NAME="IDX15"></A>
+
+</P>
+<P>
+This filter allows you to start programs and/or scripts when a certain
+string shows up. This is potentially the most powerful of the
+filters. Your program gets it's information via environment variables or
+via commandline. The following variables / environment variables are
+known:
+<DL COMPACT>
+
+<DT><SAMP>`%F'</SAMP>
+<DD>
+<DT><SAMP>`XLM_FILENAME'</SAMP>
+<DD>
+absoute path to file/device of entry.
+<DT><SAMP>`%H'</SAMP>
+<DD>
+<DT><SAMP>`XLM_HELP'</SAMP>
+<DD>
+helptext of entry.
+<DT><SAMP>`%L'</SAMP>
+<DD>
+<DT><SAMP>`XLM_LINE'</SAMP>
+<DD>
+line that actually triggered the Execute filter.
+<DT><SAMP>`%M'</SAMP>
+<DD>
+<DT><SAMP>`XLM_MODE'</SAMP>
+<DD>
+mode of entry.
+<DT><SAMP>`%N'</SAMP>
+<DD>
+<DT><SAMP>`XLM_NAME'</SAMP>
+<DD>
+name of the Logfile that triggered the Execute filter.
+</DL>
+<P>
+A word of warning: the execute entry will only process one command
+and substitute the variables accordingly. If you want to create a more
+complicated setup I'd recommend to write a small shellscript. This
+especially means that piping will <EM>not</EM> work.
+
+</P>
+
+
+<H4><A NAME="SEC16" HREF="tutorial_toc.html#TOC16">Notice</A></H4>
+<P>
+<A NAME="IDX16"></A>
+
+</P>
+<P>
+This filter has been implemented for events that are of extreme
+importantce regardless of when they have been triggered. A notice box
+is being popped up at the current mouse position. This notice box
+contains a list with the time and date of the triggering action as well
+as the name of the entry that triggered it. If you click on an entry in
+this list you'll see the triggering line in the text field below the list.
+<BR>
+If you set <SAMP>`--notice-follows-mouse'</SAMP> at startup the notice box will
+move to the current mouse position every time something new has been
+added.
+
+</P>
+
+
+<H4><A NAME="SEC17" HREF="tutorial_toc.html#TOC17">Uniconify</A></H4>
+<P>
+<A NAME="IDX17"></A>
+
+</P>
+<P>
+For people who like to keep the Xlogmaster iconifed because of space
+shortage. If you set this filter the Xlogmaster will uniconify automatically
+when a matching line has been seen.
+
+</P>
+
+
+<H2><A NAME="SEC18" HREF="tutorial_toc.html#TOC18">Audio Support</A></H2>
+<P>
+<A NAME="IDX18"></A>
+
+</P>
+<P>
+The Xlogmaster has Open Sound System (OSS) support. For every
+<EM>Class 1</EM> filter type (the only exception being execute) you can
+define a sound that gets played whenever this filter type has been
+triggered.
+<BR>
+The requirements that the sounds have to meet are simple: They need to
+be playable via <CODE>cat &#60;soundfile&#62; &#62; /dev/dsp</CODE>. This usually means
+they should be about 8KHz and in a standard format (<SAMP>`Wave'</SAMP>,
+<SAMP>`ULaw'</SAMP> or <SAMP>`SUN audio'</SAMP> for instance).
+<BR>
+Please check out the commandline options for setting of the
+soundfiles. If nothing is given the Xlogmaster will use the files in
+<TT>`$prefix/etc/sound'</TT>. The standard is to play back the files
+called <TT>`notice'</TT>, <TT>`alert'</TT> or <TT>`uniconify'</TT> -- I'd recommend
+to make then symbolic links instead of actually copying the files there.
+
+</P>
+
+
+<H1><A NAME="SEC19" HREF="tutorial_toc.html#TOC19">Configuration Files</A></H1>
+<P>
+<A NAME="IDX19"></A>
+
+</P>
+
+
+
+<H2><A NAME="SEC20" HREF="tutorial_toc.html#TOC20">Configfile Introduction</A></H2>
+<P>
+<A NAME="IDX20"></A>
+
+</P>
+<P>
+There are two different filetypes used for configuration by the
+Xlogmaster. 
+One is the GTK+ special style file, the <STRONG>gtkrc</STRONG> file I do not want
+to say too much about that one because it is documented with the GTK+
+toolkit 
+(See Info file `GTK', node `Resource Files')
+and it's format is actually pretty simple. A look at
+the sample files distributed along with the Xlogmaster should already
+solve all questions, so feel free to check them out and try around with
+them. They allow you to control the look of the Xlogmaster any way you
+want and it's definitely worth risking a look.
+<P>
+The Xlogmaster internal configuration file is pure ASCII and can hence
+be processed easily with any text editor although you will most probably
+not need to do so because the customization menu is much nicer.
+<P>
+
+</P>
+
+
+<H2><A NAME="SEC21" HREF="tutorial_toc.html#TOC21">Xlogmaster configuration file format</A></H2>
+<P>
+<A NAME="IDX21"></A>
+
+</P>
+<P>
+The format is line oriented, this means every entry needs to use exactly
+one line. Entries that do not follow this policy will be ignored.
+<BR>
+There are two kinds of entries for the configuration file, the first is
+a line that contains the <STRONG>mode</STRONG> of the entry along with it's name
+and some more information. The format for this kind of entry is
+<P>
+<SAMP>`MODE{FILENAME,INTERVAL,BUTTONTEXT,HELPTEXT}'</SAMP>
+<P>
+where the fields are the same as in the customization menu:
+<BR>
+<DL COMPACT>
+
+<DT><SAMP>`MODE'</SAMP>
+<DD>
+The mode for the entry
+(See see section <A HREF="tutorial.html#SEC5">Modes</A>)
+, either <STRONG>TAIL</STRONG> or <STRONG>CAT</STRONG>
+<DT><SAMP>`FILENAME'</SAMP>
+<DD>
+The absolute path to the file or device that the entry is for.
+<DT><SAMP>`INTERVAL'</SAMP>
+<DD>
+The interval (in tenth of seconds) for this entry.
+(See see section <A HREF="tutorial.html#SEC5">Modes</A>)
+<DT><SAMP>`BUTTONTEXT'</SAMP>
+<DD>
+The name to appear on the button for the entry.
+<DT><SAMP>`HELPTEXT'</SAMP>
+<DD>
+The text that should pop up when the mouse pointer has been pending over
+the button for a short while.
+</DL>
+<P>
+The second kind of entry is the one for the filters. A filter line looks
+like
+<P>
+<SAMP>`MODES{REGEX}'</SAMP>
+<P>
+the <SAMP>`MODES'</SAMP> are a comma separated list of filter modes (only one
+<EM>Class 0</EM> filter is allowed) and the <SAMP>`REGEX'</SAMP> is a standard
+regular expression (see GNU Regex manual). The filter lines always apply
+to the
+<P>
+Available strings for the <SAMP>`MODES'</SAMP> are
+<DL COMPACT>
+
+<DT><SAMP>`RAISE'</SAMP>
+<DD>
+A display-time filter.
+(See see section <A HREF="tutorial.html#SEC9">Class 0 filters</A>)
+<DT><SAMP>`LOWER'</SAMP>
+<DD>
+A display-time filter.
+(See see section <A HREF="tutorial.html#SEC9">Class 0 filters</A>)
+<DT><SAMP>`HIDE'</SAMP>
+<DD>
+A display-time filter.
+(See see section <A HREF="tutorial.html#SEC9">Class 0 filters</A>)
+<DT><SAMP>`NOTICE'</SAMP>
+<DD>
+A background filter.
+(See see section <A HREF="tutorial.html#SEC13">Class 1 filters</A>)
+<DT><SAMP>`ALERT'</SAMP>
+<DD>
+A background filter.
+(See see section <A HREF="tutorial.html#SEC13">Class 1 filters</A>)
+<DT><SAMP>`UNICONIFY'</SAMP>
+<DD>
+A background filter.
+(See see section <A HREF="tutorial.html#SEC13">Class 1 filters</A>)
+<DT><SAMP>`EXECUTE'</SAMP>
+<DD>
+A background filter.
+(See see section <A HREF="tutorial.html#SEC13">Class 1 filters</A>)
+This filter requires another argument -- the commandline that will be
+executed when a line matches the <EM>REGEX</EM>. The commandline is just
+appended in <SAMP>`{   }'</SAMP> brackets.
+(See see section <A HREF="tutorial.html#SEC15">Execute</A>)
+<DT><SAMP>`INVERT'</SAMP>
+<DD>
+invert sense of matching -- all non-matching lines will trigger a
+filter
+<DT><SAMP>`CASE_SENSITIVE'</SAMP>
+<DD>
+matching is performed case sensitive
+</DL>
+<P>
+Here are some lines to give you an example of how a proper xlogmasterrc
+file looks.
+<P>
+
+<PRE>
+TAIL{/var/log/messages,3,System Messages,/var/log/messages}
+RAISE{greve}
+HIDE{accesswatch}
+HIDE{faxqclean}
+HIDE{uucpcontrol}
+HIDE{touch.*/tmp/newsrun}
+TAIL{/var/log/warn,3,Warning Messages,/var/log/warn}
+TAIL{/var/adm/kernel,3,Kernel Messages,/var/adm/kernel}
+TAIL{/var/adm/debug,3,Debugging Messages,/var/adm/debug}
+RAISE,NOTICE{accesswatch}
+HIDE{newsrun}
+EXECUTE,CASE_SENSITIVE{uucpcontrol}{xlm-mail greve}
+</PRE>
+
+
+
+<H1><A NAME="SEC22" HREF="tutorial_toc.html#TOC22">Concept Index</A></H1>
+
+<P>
+<H2>a</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX14">Alert filter (Class 1)</A>
+<LI><A HREF="tutorial.html#IDX18">Audio Support</A>
+</DIR>
+<H2>c</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX7">Cat mode</A>
+<LI><A HREF="tutorial.html#IDX9">Class 0 filters</A>
+<LI><A HREF="tutorial.html#IDX13">Class 1 filters</A>
+<LI><A HREF="tutorial.html#IDX20">Configfile Introduction</A>
+<LI><A HREF="tutorial.html#IDX19">Configuration Files</A>
+</DIR>
+<H2>e</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX15">Execute filter (Class 1)</A>
+</DIR>
+<H2>f</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX8">Filters</A>
+</DIR>
+<H2>h</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX10">Hide filter (Class 0)</A>
+<LI><A HREF="tutorial.html#IDX3">How to use the Xlogmaster</A>
+</DIR>
+<H2>i</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX4">Internal workings of the Xlogmaster</A>
+<LI><A HREF="tutorial.html#IDX2">Introduction into the Xlogmaster</A>
+</DIR>
+<H2>l</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX12">Lower filter (Class 0)</A>
+</DIR>
+<H2>m</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX5">Modes</A>
+</DIR>
+<H2>n</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX16">Notice filter (Class 1)</A>
+</DIR>
+<H2>r</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX11">Raise filter (Class 0)</A>
+</DIR>
+<H2>t</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX6">Tail mode</A>
+</DIR>
+<H2>u</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX17">Uniconify filter (Class 1)</A>
+</DIR>
+<H2>x</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX21">Xlogmaster configuration file format</A>
+</DIR>
+<H2>y</H2>
+<DIR>
+<LI><A HREF="tutorial.html#IDX1">Your rights and freedoms.</A>
+</DIR>
+     
+<P><HR><P>
+This document was generated on 21 August 1998 using the
+<A HREF="http://wwwcn.cern.ch/dci/texi2html/">texi2html</A>
+translator version 1.51.</P>
+</BODY>
+</HTML>

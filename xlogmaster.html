@@ -1,0 +1,330 @@
+<!-- X-URL: http://www.gnu.org/software/xlogmaster/xlogmaster.html -->
+<!-- <BASE HREF="http://www.gnu.org/software/xlogmaster/xlogmaster.html"> -->
+
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD>
+<TITLE>The Xlogmaster - GNU Project - Free Software Foundation (FSF) </TITLE>
+<!-- Changed by: Georg Greve, 31-Aug-1998 -->
+<LINK REV="made" HREF="mailto:greve@gnu.org">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#1F00FF" ALINK="#FF0000" VLINK="#9900DD">
+    
+    
+<A HREF="/graphics/xlogmaster/logo_small.jpg"><IMG SRC="/graphics/xlogmaster/logo_small.jpg" ALT=" [cool image of a penguin with glasses] ">&#32;(jpeg 15k)</A>
+<A HREF="/graphics/xlogmaster/logo.jpg">(jpeg 42k)</A>
+<A HREF="/graphics/xlogmaster/logo_icon.jpg">(jpeg 8k)</A>
+<A HREF="/graphics/xlogmaster/logo_icon.xpm">(xpm 5k)</A>
+<A HREF="/philosophy/gif.html">no gifs due to patent problems</A>
+    
+<P>
+
+<H1><A NAME="TOC">The Xlogmaster</A></H1>
+<H3>current version: 1.4.4</H3>
+
+<OL>
+<LI><A NAME="TOCWhatis" HREF="#Whatis">What is the Xlogmaster ?</A>
+<LI><A NAME="TOCNew" HREF="#New">What's new in the current release ?</A>
+<LI><A NAME="TOCPlatforms" HREF="#Platforms">Supported Platforms</A>
+  <UL>
+    <LI><A HREF="#Ports" NAME="TOCPorts">Existing Ports</A>
+  </UL>
+<LI><A NAME="TOCObtaining" HREF="#Obtaining">Obtaining the Xlogmaster</A>
+<LI><A NAME="TOCHelp" HREF="#Help">Getting Help with the Xlogmaster</A>
+  <UL>
+    <LI><A HREF="#Manuals" NAME="TOCManuals">Manuals</A>
+    <LI><A HREF="#HelpMailing" NAME="TOCHelpMailing">Mailing Lists</A>
+    <LI><A HREF="#ReportBugs" NAME="TOCReportBugs">How to Report Bugs</A>
+  </UL>
+<LI><A NAME="TOCAdditional" HREF="#Additional">Further Information & Links:</A></LI>
+<UL>
+<LI><A NAME="TOCScreenshots" HREF="#Screenshots">What does the Xlogmaster look like ? (screenshots)</A></LI>
+<LI><A NAME="TOCNewFeatures" HREF="#NewFeatures">What will the future bring ?</A>
+What will the future bring ?</LI>
+</UL>
+
+</OL>
+<BR>
+
+<HR>
+
+<H2><A NAME="Whatis" HREF="#TOCWhatis">What is the Xlogmaster ?</A></H2>
+
+<P> If you are in a hurry, here is the ultra-short version:<P>
+<BLOCKQUOTE><EM>
+The Xlogmaster is a program that lets you monitor an almost infinite number of logfiles and all 
+devices that can be read via "cat" like the /proc ones.
+</EM></BLOCKQUOTE>
+<P>
+For those who'd like to know more, here is an introduction into the features:
+<P>
+Based on the standard UN*X commands that perform similar tasks the modes are called
+<UL>
+<LI><B>TAIL-Mode:</B> The Xlogmaster will read the file and then check back in
+regular intervals (default: 0.3 seconds) whether anything has changed -
+practically the same functionality you got with "tail -f" but just much
+nicer to handle and look at. If you monitor more than two logfiles you are in grave danger of
+immediately falling in love with the Xlogmaster because it makes finding the
+information much more comfortable. :-) </LI>
+</UL>
+and
+<UL>
+<LI><B>CAT-Mode:</B> This mode keeps on "catting" the file/device you have
+given it in user defined intervals. The first thing that will probably come to your mind now is: "Cool ! 
+I can keep track of all the /proc devices that are of interest for me." (didn't it ? :-) ) 
+Whatever - I really like this mode.</LI>
+</UL>
+
+<P>
+
+The information retrieved by those modes can then be processed in certain ways. The
+obvious one is displaying it in the text window. To make this more comfortable you can
+define filters that allow you to raise, lower or hide lines on a case-insensitive substrng match.
+
+<P>
+
+Since version 1.3.0 the Xlogmaster supports background monitoring, as well - you can define
+filters that trigger certain actions based on a case-insensitive substring match. The entry does not need
+to be active for that.
+
+<P>
+
+I invented a classification for these filters to make clear they work on different levels. The <B>Class0 filters</B>
+are filters that are applied at <B>display-time</B> and the <B>Class1 filters</B> are used in the background.
+Implemented filters are:
+
+<UL>
+<EM>All matches are case-insensitive substring matches with the wildcards '*' and '?'.</EM><P>
+<LI> <B> CLASS0: </B> only one of the Class0 filters can be applied on a line. Usually the first applicable match is
+being taken. The only exception is "Hide" - if it can be applied the line will be hidden even if it also matches
+another Class0 filter.</LI>
+<UL>
+<LI> <B> Raise: </B> a line is being highlighted on a match </LI>
+<LI> <B> Lower: </B> a line is being lowlighted on a match </LI>
+<LI> <B> Hide: </B> a line is being hidden on a match </LI>
+</UL>
+<LI> <B> CLASS1: </B> all of the Class1 filters than can be applied are being applied so theoretically a single
+line can trigger all filters and maybe even several times. All Class1 filters also trigger a user chosen
+sound when being triggered so the user also gets an audio-warning.</LI>
+<UL>
+<LI> <B> Alert: </B> the button for the logfile flashes up in a user-defined color (default is red) and slowly
+fades back to it's normal color within a given timespan. The idea is that occurences that are only of interest
+for a certain timespan don't trigger the buttons to be all red if you leave the keyboard for a few hours.</LI>
+<LI> <B> Notice: </B> a notice box will pop up at the current mouse position showing you the name of the
+entry and the line that triggered the alarm together with the date the notice has been triggered. The notice box
+contains a list so nothing will get lost. The box will be cleared and disappear if you click on the "dismiss" button
+ - but only then, so events that were very important will always be brought to your notice even if you have
+been afk for days.</LI>
+<LI> <B> Uniconify: </B> the Xlogmaster will uniconify automatically if this event is being triggered. Useful for
+people with limited desktop space who prefer to keep the Xlogmaster iconified.</LI>
+<LI> <B> Execute: </B> a user-given program is being executed on a match. Some useful default scripts are
+contained in the distribution but you can easily write your own ones, as well. For this purpose the Xlogmaster
+supplies some variables (name of entry, helptext for entry, line that triggered execution, absolute path to file/device, mode of entry (TAIL/CAT)).</LI>
+</LI>
+</UL>
+</UL>
+
+
+<H2><A NAME="New" HREF="#TOCNew">What's new in the current release ?</A></H2>
+
+There have been a lot of changes - only the really important ones are listed here:<P>
+<UL>
+<LI> most important: <B> The Xlogmaster is now a GNU program </B> (surprise, surprise) </LI>
+<LI> introduction of background monitoring / Class1 filters (see above)</LI>
+<LI> better menu handling </LI>
+<LI> audio support </LI>
+<LI> locking in memory possible </LI>
+<LI> <STRONG>for 1.4.1</STRONG> <EM> no user visible changes </EM><UL>
+<LI> usage of getopt_long replaced by own function because getopt_long doesn't exist on some platforms. </LI>
+<LI> usage of setenv replaced by own function calling putenv because setenv doesn't exist on some platforms. </LI>
+<LI> replaced one variable name because it is a symbol in libc5.</LI>
+<LI> forced usage of <A HREF="http://www.gtk.org/">GTK+</A>  1.0.5 because the previous versions had a memory leak in the GtkText widget.</LI>
+</UL></LI>
+<LI> <STRONG>for 1.4.2</STRONG> <UL>
+<LI>the button of the active entry stays in PRELIGHT color</LI>
+<LI>The Xlogmaster now uses real REGEX patterns</LI>
+<LI>The buttons can be hidden/shown now via middle mouse button</LI>
+</UL>
+<LI> <STRONG>for 1.4.4</STRONG> <UL>
+<LI>nicer installation on problematic systems</LI>
+</UL>
+</UL>
+
+<H2><A NAME="Platforms" HREF="#TOCPlatforms">Supported Platforms</A></H2>
+
+First of all: You will <EM>definitely</EM> need the 
+<A HREF="http://www.gtk.org/">GTK+</A> toolkit if you didn't install it already. 
+Apart from that there is no reason why it shouldn't work on all UN*X systems. Until
+now I did not receive any mail telling me that the Xlogmaster did not install fine.
+<P>
+The following list shows all systems I have positive knowledge about from users
+who told me they got the Xlogmaster running without major problems. If your system 
+is not on the  list and you are successful with the installation I'd like you 
+to send a short mail to  <A HREF="mailto:xlogmaster-bugs@gnu.org">
+<EM>xlogmaster-bugs@gnu.org</EM></A>
+ so I can include your system in this list. <UL>
+<LI> Digital UNIX 3.2c </LI>
+<LI> FreeBSD </LI>
+<LI> GNU/Linux </LI>
+<LI> HP-UX </LI>
+<LI> Irix5.3 (MIPS R4000) </LI>
+<LI> Solaris </LI>
+<LI> SunOS 4.1.1 </LI>
+<LI> x86 BSDI 3.0 </LI>
+</UL>
+
+<H3><A NAME="Ports" HREF="#TOCPorts">Existing Ports</A></H3>
+For some systems people already configured the Xlogmaster package to fit
+the system/distribution best. If you are running one of those systems you might
+consider installing the ported version instead of the original one because it will probably
+be even easier to install and will cause the Xlogmaster to be installed "the standard way"
+for your system without you having to worry about it. Ports exist for the following systems:<UL>
+
+
+<LI> <A HREF="http://www.freebsd.org/ports/index.html">FreeBSD</A> </LI>
+<LI> <A HREF="http://www.debian.org/Packages/unstable/admin/xlogmaster.html">Debian GNU/Linux</A> </LI>
+
+
+</UL>
+
+If you happen to maintain a port for a system not on this list you can send me a mail with
+the HTML address (text preferred but I can include FTP addresses in case there is nothing 
+else available) to
+<A HREF="mailto:xlogmaster-bugs@gnu.org"><EM>xlogmaster-bugs@gnu.org</EM></A>
+and I will include it here.<P>
+
+<H2><A NAME="Obtaining" HREF="#TOCObtaining">Obtaining the Xlogmaster</A></H2>
+
+You can download the Xlogmaster from the gnu.org FTP site at <A HREF="ftp://ftp.gnu.org/pub/gnu/">ftp://ftp.gnu.org/pub/gnu/</A> or one of it's mirrors. <P>
+
+Additionally you should be able to find it on <A HREF="ftp://sunsite.unc.edu/pub/gnu/">ftp://sunsite.unc.edu/pub/gnu/</A> or one of it's mirrors. <P>
+
+If everything fails there are still my private Xlogmaster pages at <A HREF="http://www.fusebox.hanse.de/xlogmaster/">http://www.fusebox.hanse.de/xlogmaster/</A> or <A HREF="http://porter.desy.de/~greve/xlogmaster/">http://porter.desy.de/~greve/xlogmaster/</A>. <P>
+
+For "still hot and steaming" development versions fresh out of the running development you might want to
+check out the <A HREF="/software/xlogmaster/development.html">development page</A>.
+
+<P>If you would like to know whether someone already configured the package to fit your
+system best you should take a look at the <A HREF="#Ports">Existing Ports</A> list.
+
+<P> Also see the <A HREF="/software/software.html#HowToGetSoftware">software</A>
+page for information on obtaining <EM>The Xlogmaster</EM> and other GNU software.
+
+
+
+<H2><A NAME="Help" HREF="#TOCHelp">Getting Help with the Xlogmaster</A></H2>
+
+If you have a question about the Xlogmaster in general, about help for including it in
+some project or distribution you can send a mail to <A HREF="mailto:xlogmaster-bugs@gnu.org">xlogmaster-bugs@gnu.org</A>. If the question has been answered in the tutorial, the manpage or on this page, though, the answer
+will most probably contain several R's, T's, F's and M's.<P> 
+
+<P>Information on getting help with GNU software in general is available
+at the <A HREF="/help/gethelp.html">Get Help with GNU Software</A> page. </P>
+
+<H3><A NAME="Manuals" HREF="#TOCManuals">Manuals</A></H3>
+
+There are a few documents about the Xlogmaster:
+<UL>
+<LI>the <A HREF="/software/xlogmaster/tutorial_toc.html">Tutorial</A> 
+- contained in the distribution</LI>
+<LI>the <A HREF="/software/xlogmaster/xlogmaster_faq_toc.html">Frequently Answered Questions</A> 
+<LI>the manpage - also contained in the distribution</LI>
+
+</UL><P>
+
+The Tutorial and the FAQ are still far from being complete... I would rather see them as a
+start. Comments and suggestions are always welcome.
+
+<P>
+
+<H3><A NAME="HelpMailing" HREF="#TOCHelpMailing">Mailing Lists</A></H3>
+
+There are two mailing lists for the Xlogmaster you can subscribe to: <P>
+
+<UL>
+<LI><EM>help-xlogmaster@gnu.org</EM>: This list is for general discussion about the Xlogmaster
+ - everything that doesn't fit into the second list belongs in here.<P>
+Subscribe via mail to 
+<A HREF="mailto:help-xlogmaster-request@gnu.org">help-xlogmaster-request@gnu.org</A>
+and just enter "subscribe" (without the quotes) in the body of the message<P>
+All postings go to <A HREF="mailto:help-xlogmaster@gnu.org">help-xlogmaster@gnu.org</A><P></LI>
+
+<LI><EM>beta-xlogmaster@gnu.org</EM>: This list is for the running development of the
+Xlogmaster. If you are interested in the latest features, in getting mail about the brandnew 
+betatest versions or just in helping making the Xlogmaster more stable, this list is for you.
+I actually encourage you to subscribe to this list because more betatesters make the next  
+full release more stable. If this sounds interesting you might also want to check out the 
+<A HREF="/software/xlogmaster/development.html">development page</A>.<P>
+Subscribe via mail to 
+<A HREF="mailto:beta-xlogmaster-request@gnu.org">beta-xlogmaster-request@gnu.org</A>
+and just enter "subscribe" (without the quotes) in the body of the message<P>
+All postings go to <A HREF="mailto:beta-xlogmaster@gnu.org">beta-xlogmaster@gnu.org</A><P></LI>
+</UL>
+
+<H3><A NAME="ReportBugs" HREF="#TOCReportBugs">How to Report Bugs</A></H3>
+All bug reports go to 
+<A HREF="mailto:xlogmaster-bugs@gnu.org"><EM>xlogmaster-bugs@gnu.org</EM></A>
+ - the bug report should contain: <P>
+<UL>
+<LI> The version of the Xlogmaster </LI>
+<LI> The version of <A HREF="http://www.gtk.org/">GTK+</A> </LI>
+<LI> Information about your system: </LI>
+<UL>
+<LI>Operating system and version</LI>
+<LI>Version of X</LI>
+<LI>Anything else you think might be relevant.</LI>
+</UL>
+<LI>How to reproduce the bug</LI>
+<LI>If the bug crashed the Xlogmaster or what message you got</LI>
+<LI>Further information you can supply</LI>
+</UL>
+
+
+<H2><A NAME="Additional" HREF="#TOCAdditional">Further Information & Links:</A></H2>
+
+Here is some more information in case you still haven't had enough: <P>
+
+<H3><A NAME="Screenshots" HREF="#TOCScreenshots">What does the Xlogmaster look like ?</A></H3>
+
+Since it would be rude and not in the GNU policy to crowd this page with screenshots,
+you can go the separate <A HREF="/software/xlogmaster/screenshots.html">screenshot</A> 
+page where you will get several thumbnails you can click on to get the full picture.<P>
+
+<H3><A NAME="NewFeatures" HREF="#TOCNewFeatures">What will the future bring ?</A></H3>
+
+Have a look at the current developments on my separate
+<A HREF="/software/xlogmaster/development.html">development</A> page. You will also find links
+to download the latest beta-versions there.<P>
+
+<HR>
+Return to <A HREF="/home.html">GNU's home page</A>.
+<P>
+
+Please send FSF &amp; GNU inquiries &amp; questions to
+
+<A HREF="mailto:gnu@gnu.org"><EM>gnu@gnu.org</EM></A>.
+There are also <A HREF="/home.html#ContactInfo">other ways to
+contact</A> the FSF.
+<P>
+
+Please send comments on these web pages to
+
+<A HREF="mailto:greve@gnu.org"><EM>greve@gnu.org</EM></A>,
+send other questions to
+<A HREF="mailto:gnu@gnu.org"><EM>gnu@gnu.org</EM></A>.
+<P>
+Copyright (C) 1998 Georg C. F. Greve - 
+The Xlogmaster is a GNU program <P>
+Free Software Foundation, Inc.,
+59 Temple Place - Suite 330, Boston, MA  02111,  USA
+<P>
+Verbatim copying and distribution of this entire article is
+permitted in any medium, provided this notice is preserved.
+<P>
+Updated:
+<!-- hhmts start -->
+31 Aug 1998 greve
+<!-- hhmts end -->
+<HR>
+</BODY>
+</HTML>
