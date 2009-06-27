@@ -5,7 +5,7 @@
 <HTML>
 <HEAD>
 <TITLE>Xlogmaster - GNU Project - Free Software Foundation (FSF) </TITLE>
-<!-- Changed by: John S. Gaythorpe, 23-Mar-2004 -->
+<!-- Changed by: John S. Gaythorpe, 26-Jun-2009 -->
 <LINK REV="made" HREF="mailto:jsg@metrocast.net">
 <META NAME="keywords" CONTENT="xlogmaster">
 </HEAD>
@@ -21,7 +21,7 @@
 <P>
 
 <H1><A NAME="TOC">Xlogmaster</A></H1>
-<H3>current and stable version: 1.6.0</H3>
+<H3>current and stable version: 1.6.2</H3>
 
 <OL>
 <LI><A NAME="TOCDevel" HREF="#Devel">Is Xlogmaster still being developed?</A>
@@ -176,28 +176,6 @@ listed here.<P>
 <LI> Xlogmaster now catches logfile rotation </LI>
 
 </UL>
-<STRONG>Stable tree 1.4.x:</STRONG>
-<UL>
-<LI> most important: <B> Xlogmaster is now a GNU program </B> (surprise, surprise) </LI>
-<LI> introduction of background monitoring / Class1 filters (see above)</LI>
-<LI> better menu handling </LI>
-<LI> audio support </LI>
-<LI> locking in memory possible </LI>
-<LI> <STRONG>for 1.4.1</STRONG> <EM> no user visible changes </EM><UL>
-<LI> usage of getopt_long replaced by own function because getopt_long doesn't exist on some platforms. </LI>
-<LI> usage of setenv replaced by own function calling putenv because setenv doesn't exist on some platforms. </LI>
-<LI> replaced one variable name because it is a symbol in libc5.</LI>
-<LI> forced usage of <A HREF="http://www.gtk.org/">GTK+</A>  1.0.5 because the previous versions had a memory leak in the GtkText widget.</LI>
-</UL></LI>
-<LI> <STRONG>for 1.4.2</STRONG> <UL>
-<LI>the button of the active entry stays in PRELIGHT color</LI>
-<LI>Xlogmaster now uses real REGEX patterns</LI>
-<LI>The buttons can be hidden/shown now via middle mouse button</LI>
-</UL>
-<LI> <STRONG>for 1.4.4</STRONG> <UL>
-<LI>nicer installation on problematic systems</LI>
-</UL>
-</UL>
 
 <H2><A NAME="Platforms" HREF="#TOCPlatforms">Supported Platforms</A></H2>
 
@@ -213,16 +191,12 @@ is not on the  list and you are successful with the installation I'd like you
 to send a short mail to  <A HREF="mailto:xlogmaster-bugs@gnu.org">
 <EM>xlogmaster-bugs@gnu.org</EM></A>
  so I can include your system in this list. <UL>
-<LI> AIX 4.1.5 </LI>
-<LI> Digital UNIX 3.2c </LI>
+<LI> AIX </LI>
 <LI> FreeBSD </LI>
 <LI> GNU/Linux </LI>
 <LI> HP-UX </LI>
-<LI> Irix5.3 (MIPS R4000) </LI>
-<LI> Irix 6.2 (MIPS R5000) </LI>
 <LI> Solaris </LI>
-<LI> SunOS 4.1.1 </LI>
-<LI> x86 BSDI 3.0 </LI>
+<LI> BSD </LI>
 <LI> ... ? </LI>
 </UL>
 
@@ -383,7 +357,7 @@ Please send comments on these web pages to
 send other questions to
 <A HREF="mailto:gnu@gnu.org"><EM>gnu@gnu.org</EM></A>.
 <P>
-Copyright (C) 1998,1999 Georg C. F. Greve, 2004 John S. Gaythorpe - 
+Copyright (C) 1998,1999 Georg C. F. Greve, 2004, 2009 John S. Gaythorpe - 
 Xlogmaster is a GNU program <P>
 Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA  02111,  USA
@@ -393,7 +367,7 @@ permitted in any medium, provided this notice is preserved.
 <P>
 Updated:
 <!-- hhmts start -->
-Last modified: Thu Mar 23 2004
+Last modified: Jun 26, 2009
 <!-- hhmts end -->
 <HR>
 </BODY>
